@@ -1,0 +1,106 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="conainter-fluid">
+    <div class="row mt-2">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            @if (TempData.ContainsKey("ErrorMessage") && !string.IsNullOrEmpty(TempData["ErrorMessage"].ToString()))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Opps! </strong>@TempData["ErrorMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            else if (TempData.ContainsKey("SuccessMessage") && !string.IsNullOrEmpty(TempData["SuccessMessage"].ToString()))
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Done! </strong>@TempData["SuccessMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <form asp-action="Index" asp-controller="Employee" method="post" asp-antiforgery="true">
+            <div class="row">
+                <div class="col-sm-10 col-xl-3 col-md-3 col-lg-3">
+                    <input class="form-control" asp-for="SearchText" placeholder="Search..." autocomplete="off" />
+                </div>
+                <div class="col-sm-2 col-xl-1 col-md-1 col-lg-1">
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+                <div class="col-sm-12 col-xl-8 col-md-8 col-lg-8" style="text-align:right">
+                    <a class="btn btn-primary" asp-controller="Employee" asp-action="Add">Add New Employee</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row mt-2">
+
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date Of Birth</th>
+                        <th>Department Name</th>
+                        <th>Salary</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.List.Count > 0)
+                    {
+                        @foreach (var item in Model.List)
+                        {
+                            <tr>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.DateOfBirth.Value.ToString("MM/dd/yyyy")</td>
+                                <td>@item.DepartmentName</td>
+                                <td>@item.Salary.ToString("0.00")</td>
+                                <td>@item.EmailAddress</td>
+                                <td>@item.PhoneNumber</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Add" asp-controller="Employee" asp-route-id="@item.EmployeeId"> Edit</a>
+                                    <button class="btn btn-danger" onclick="Delete(@item.EmployeeId)"> Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                <div class="alert alert-warning">
+                                    <b>No Data to Show</b>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        function Delete(id) {
+            if (confirm("Are you sure want to delete this employee")) {
+                window.location = "/Employee/Delete/" + id;
+            }
+        }
+    </script>
+}

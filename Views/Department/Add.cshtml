@@ -1,0 +1,57 @@
+﻿@model DepartmentModel
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="conainter-fluid">
+    <div class="row mt-2">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            @if (TempData.ContainsKey("ErrorMessage") && !string.IsNullOrEmpty(TempData["ErrorMessage"].ToString()))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Opps! </strong>@TempData["ErrorMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            else if (TempData.ContainsKey("SuccessMessage") && !string.IsNullOrEmpty(TempData["SuccessMessage"].ToString()))
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Done! </strong>@TempData["SuccessMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            <form asp-action="Add" asp-controller="Department" method="post" asp-antiforgery="true">
+                <input asp-for="DepartmentId" type="hidden" />
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-6 col-lg-6">
+                        <label asp-for="DepartmentCode"></label>
+                        <input asp-for="DepartmentCode" class="form-control" placeholder="Department Code" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="DepartmentCode"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-6 col-lg-6">
+                        <label asp-for="DepartmentName"></label>
+                        <input asp-for="DepartmentName" class="form-control" placeholder="Department Name" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="DepartmentName"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-6 col-lg-6">
+                        <button type="submit" class="btn btn-success mr-1 ml-1">Save</button>
+                        <a asp-action="Index" asp-controller="Department" class="btn btn-secondary  mr-1 ml-1">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<div class="conainter-fluid">
+    <div class="row mt-2">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            @if (TempData.ContainsKey("ErrorMessage") && !string.IsNullOrEmpty(TempData["ErrorMessage"].ToString()))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Opps! </strong>@TempData["ErrorMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            else if (TempData.ContainsKey("SuccessMessage") && !string.IsNullOrEmpty(TempData["SuccessMessage"].ToString()))
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Done! </strong>@TempData["SuccessMessage"]
+                    <button type="button" class="btn btn-close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+            <form asp-action="Add" asp-controller="Employee" method="post" asp-antiforgery="true">
+                <input asp-for="EmployeeModel.EmployeeId" type="hidden" />
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.FirstName"></label>
+                        <input asp-for="EmployeeModel.FirstName" class="form-control" placeholder="First Name" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.FirstName"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.LastName"></label>
+                        <input asp-for="EmployeeModel.LastName" class="form-control" placeholder="Last Name" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.LastName"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.DepartmentId"></label>
+                        <select class="form-control" asp-for="EmployeeModel.DepartmentId" asp-items="Model.DepartmentList">
+                            <option value="0">Select Department</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="EmployeeModel.DepartmentId"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.DateOfBirth"></label>
+                        <input asp-for="EmployeeModel.DateOfBirth" class="form-control" placeholder="MM/dd/yyyy" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.DateOfBirth"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-6 col-md-6 col-lg-6">
+                        <label asp-for="EmployeeModel.EmailAddress"></label>
+                        <input asp-for="EmployeeModel.EmailAddress" class="form-control" placeholder="Email Address" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmailAddress"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.Salary"></label>
+                        <input asp-for="EmployeeModel.Salary" class="form-control" placeholder="Salary" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.Salary"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.PhoneNumber"></label>
+                        <input asp-for="EmployeeModel.PhoneNumber" class="form-control" placeholder="Phone Number" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.PhoneNumber"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.EmployeeAddressModel.AddressLine1"></label>
+                        <textarea asp-for="EmployeeModel.EmployeeAddressModel.AddressLine1" class="form-control" placeholder="Address Line 1" autocomplete="off"></textarea>
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmployeeAddressModel.AddressLine1"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-3 col-md-3 col-lg-3">
+                        <label asp-for="EmployeeModel.EmployeeAddressModel.AddressLine2"></label>
+                        <textarea asp-for="EmployeeModel.EmployeeAddressModel.AddressLine2" class="form-control" placeholder="Address Line 2" autocomplete="off"></textarea>
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmployeeAddressModel.AddressLine2"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-2 col-md-2 col-lg-2">
+                        <label asp-for="EmployeeModel.EmployeeAddressModel.City"></label>
+                        <input asp-for="EmployeeModel.EmployeeAddressModel.City" class="form-control" placeholder="City" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmployeeAddressModel.City"></span>
+                    </div>
+                    <div class="col-sm-12 col-xl-2 col-md-2 col-lg-2">
+                        <label asp-for="EmployeeModel.EmployeeAddressModel.StateName"></label>
+                        <input asp-for="EmployeeModel.EmployeeAddressModel.StateName" class="form-control" placeholder="State Name" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmployeeAddressModel.StateName"></span>
+                    </div>
+                    <div class="col-sm-12 col-xl-2 col-md-2 col-lg-2">
+                        <label asp-for="EmployeeModel.EmployeeAddressModel.Zipcode"></label>
+                        <input asp-for="EmployeeModel.EmployeeAddressModel.Zipcode" class="form-control" placeholder="Zipcode" autocomplete="off" />
+                        <span class="text-danger" asp-validation-for="EmployeeModel.EmployeeAddressModel.Zipcode"></span>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-xl-3 col-md-6 col-lg-6">
+                        <button type="submit" class="btn btn-success mr-1 ml-1">Save</button>
+                        <a asp-action="Index" asp-controller="Employee" class="btn btn-secondary  mr-1 ml-1">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
