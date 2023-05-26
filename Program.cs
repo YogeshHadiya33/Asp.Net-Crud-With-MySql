@@ -31,4 +31,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+//migrate databases
+app.MigrateDatabase();
+
 app.Run();

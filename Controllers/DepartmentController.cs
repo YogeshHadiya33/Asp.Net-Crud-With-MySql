@@ -12,7 +12,7 @@ namespace MySqlDemo.Controllers
         {
             _Context = context;
         }
-
+        
         public IActionResult Index(string searchText = "")
         {
             searchText = searchText.Trim();
